@@ -23,6 +23,12 @@ CSV_COLUMNS = [
 	"meth", "mushrooms", "nicotine", "semer", "VSA"
 ]
 
+FEATURE_COLUMNS = [
+	"age", "gender", "education", "country", "ethnicity",
+	"nscore", "escore", "oscore", "ascore", "cscore",
+	"impulsive", "ss"
+]
+
 NUMBERED_COLUMNS = {k:v for v, k in enumerate(CSV_COLUMNS)}
 
 TARGET = 'heroin'

@@ -4,6 +4,8 @@ PREDICTIONS = "predictions.csv"
 TRUTH = "predict_drug_consumption_data.csv"
 
 ATTRIBUTE_COLUMN = constants.NUMBERED_COLUMNS[constants.TARGET]
+HEADERS = True
+START = 1 if HEADERS else 0
 
 predictions = open(PREDICTIONS, "r")
 predictions_lines = predictions.readlines()
@@ -21,8 +23,10 @@ def decode(usage_code):
 		return '0'
 
 if len(predictions_lines) == len(truth_lines):
-	for x in range(0, len(predictions_lines)):
+	# range begins with 1 to skip header
+	for x in range(START, len(predictions_lines)):
 		# annoying new lines are attached when read from the file
+		# so I slice off last char
 		if predictions_lines[x][:-1] == decode(truth_lines[x].split(',')[ATTRIBUTE_COLUMN]):
 			correct += 1
 		else:

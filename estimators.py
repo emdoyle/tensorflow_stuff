@@ -55,12 +55,14 @@ feature_columns = base_columns + crossed_columns
 
 classifier = tf.estimator.LinearClassifier(
 	feature_columns=feature_columns,
+	n_classes=2,
 	model_dir="/tmp/drug_model")
 
 def input_fn(data_file, num_epochs, shuffle):
 	dataset = pd.read_csv(
 		tf.gfile.Open(data_file),
-		names=constants.CSV_COLUMNS,
+		header=0,
+		usecols=constants.FEATURE_COLUMNS + [constants.TARGET],
 		skipinitialspace=True,
 		engine="python")
 	dataset.dropna(how="any", axis=0)
@@ -85,6 +87,7 @@ for key in sorted(results):
 predictions = classifier.predict(input_fn=input_fn(DRUG_PREDICT, num_epochs=1,
 	shuffle=False))
 predict_writer = open(PREDICT_OUTPUT, "w")
+predict_writer.write("Fake header\n")
 for prediction in list(predictions):
 	predict_writer.write(str(prediction['class_ids'][0]) + '\n')
 
