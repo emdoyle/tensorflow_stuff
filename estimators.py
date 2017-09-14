@@ -62,11 +62,17 @@ def input_fn(data_file, num_epochs, shuffle):
 	dataset = pd.read_csv(
 		tf.gfile.Open(data_file),
 		header=0,
-		usecols=constants.FEATURE_COLUMNS + [constants.TARGET],
+		usecols=constants.FEATURE_COLUMNS + constants.TARGETS,
 		skipinitialspace=True,
 		engine="python")
+	# Drop NaN entries
 	dataset.dropna(how="any", axis=0)
-	labels = dataset[constants.TARGET].apply(lambda x: x in constants.USER).astype(int)
+
+	# Init empty dataframe, add column for each of targets
+	labels = pd.DataFrame(columns=constants.TARGETS)
+	for target in constants.TARGETS:
+		labels[target] = dataset[target].apply(lambda x: x in constants.USER).astype(int)
+
 	return tf.estimator.inputs.pandas_input_fn(
 		x=dataset,
 		y=labels,
@@ -89,6 +95,9 @@ predictions = classifier.predict(input_fn=input_fn(DRUG_PREDICT, num_epochs=1,
 predict_writer = open(PREDICT_OUTPUT, "w")
 predict_writer.write("Fake header\n")
 for prediction in list(predictions):
-	predict_writer.write(str(prediction['class_ids'][0]) + '\n')
+	curr_line = ""
+	for class_id in prediction['class_ids']:
+		curr_line += (str(class_id) + ',')
+	predict_writer.write(curr_line[:-1] + '\n')
 
 predict_writer.close()
