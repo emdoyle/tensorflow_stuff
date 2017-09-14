@@ -3,7 +3,7 @@ import constants
 PREDICTIONS = "predictions.csv"
 TRUTH = "predict_drug_consumption_data.csv"
 
-ATTRIBUTE_COLUMN = 16
+ATTRIBUTE_COLUMN = constants.NUMBERED_COLUMNS[constants.TARGET]
 
 predictions = open(PREDICTIONS, "r")
 predictions_lines = predictions.readlines()
@@ -23,7 +23,7 @@ def decode(usage_code):
 if len(predictions_lines) == len(truth_lines):
 	for x in range(0, len(predictions_lines)):
 		# annoying new lines are attached when read from the file
-		if predictions_lines[x][:-1] == decode(truth_lines[x].split(',')[16]):
+		if predictions_lines[x][:-1] == decode(truth_lines[x].split(',')[ATTRIBUTE_COLUMN]):
 			correct += 1
 		else:
 			incorrect += 1

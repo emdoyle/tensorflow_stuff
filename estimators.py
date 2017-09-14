@@ -14,15 +14,6 @@ DRUG_PREDICT = "predict_drug_consumption_data.csv"
 
 PREDICT_OUTPUT = "predictions.csv"
 
-CSV_COLUMNS = [
-	"age", "gender", "education", "country", "ethnicity",
-	"nscore", "escore", "oscore", "ascore", "cscore",
-	"impulsive", "ss", "alcohol", "amphet", "amyl",
-	"benzos", "caff", "cannabis", "choc", "coke", "crack",
-	"ecstasy", "heroin", "ketamine", "legalh", "LSD",
-	"meth", "mushrooms", "nicotine", "semer", "VSA"
-]
-
 # Bucketization for possible nonlinear relationship
 age = tf.feature_column.numeric_column("age")
 age_buckets = tf.feature_column.bucketized_column(
@@ -69,11 +60,11 @@ classifier = tf.estimator.LinearClassifier(
 def input_fn(data_file, num_epochs, shuffle):
 	dataset = pd.read_csv(
 		tf.gfile.Open(data_file),
-		names=CSV_COLUMNS,
+		names=constants.CSV_COLUMNS,
 		skipinitialspace=True,
 		engine="python")
 	dataset.dropna(how="any", axis=0)
-	labels = dataset["cannabis"].apply(lambda x: x in constants.USER).astype(int)
+	labels = dataset[constants.TARGET].apply(lambda x: x in constants.USER).astype(int)
 	return tf.estimator.inputs.pandas_input_fn(
 		x=dataset,
 		y=labels,

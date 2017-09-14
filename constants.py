@@ -13,3 +13,16 @@ USER = [
 NON_USER = [
 	"CL0", "CL1", "CL2"
 ]
+
+CSV_COLUMNS = [
+	"age", "gender", "education", "country", "ethnicity",
+	"nscore", "escore", "oscore", "ascore", "cscore",
+	"impulsive", "ss", "alcohol", "amphet", "amyl",
+	"benzos", "caff", "cannabis", "choc", "coke", "crack",
+	"ecstasy", "heroin", "ketamine", "legalh", "LSD",
+	"meth", "mushrooms", "nicotine", "semer", "VSA"
+]
+
+NUMBERED_COLUMNS = {k:v for v, k in enumerate(CSV_COLUMNS)}
+
+TARGET = 'heroin'
