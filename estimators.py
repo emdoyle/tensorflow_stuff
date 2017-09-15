@@ -48,14 +48,18 @@ base_columns = [
 ]
 
 crossed_columns = [
-	country_ethnicity
+	# country_ethnicity
 ]
 
 feature_columns = base_columns + crossed_columns
 
-classifier = tf.estimator.LinearClassifier(
+classifier = tf.estimator.DNNClassifier(
 	feature_columns=feature_columns,
-	n_classes=2,
+	hidden_units=[1024, 512, 256],
+    optimizer=tf.train.ProximalAdagradOptimizer(
+      learning_rate=0.1,
+      l1_regularization_strength=0.001
+    ),
 	model_dir="/tmp/drug_model")
 
 def input_fn(data_file, num_epochs, shuffle):
