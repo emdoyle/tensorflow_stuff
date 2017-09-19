@@ -53,13 +53,17 @@ crossed_columns = [
 
 feature_columns = base_columns + crossed_columns
 
-classifier = tf.estimator.DNNClassifier(
+# classifier = tf.estimator.DNNClassifier(
+# 	feature_columns=feature_columns,
+# 	hidden_units=[512, 256, 128],
+#     optimizer=tf.train.ProximalAdagradOptimizer(
+#       learning_rate=0.1,
+#       l1_regularization_strength=0.001
+#     ),
+# 	model_dir="/tmp/drug_model")
+
+classifier = tf.estimator.LinearClassifier(
 	feature_columns=feature_columns,
-	hidden_units=[1024, 512, 256],
-    optimizer=tf.train.ProximalAdagradOptimizer(
-      learning_rate=0.1,
-      l1_regularization_strength=0.001
-    ),
 	model_dir="/tmp/drug_model")
 
 def input_fn(data_file, num_epochs, shuffle):
