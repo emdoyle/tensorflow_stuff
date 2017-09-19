@@ -38,8 +38,14 @@ cscore = tf.feature_column.numeric_column("cscore")
 impulsive = tf.feature_column.numeric_column("impulsive")
 ss = tf.feature_column.numeric_column("ss")
 
-country_ethnicity = tf.feature_column.crossed_column(
-	["country", "ethnicity"], hash_bucket_size=500)
+nscore_ascore = tf.feature_column.crossed_column(
+	["nscore", "ascore"], hash_bucket_size=500)
+nscore_cscore = tf.feature_column.crossed_column(
+	["nscore", "cscore"], hash_bucket_size=500)
+ascore_cscore = tf.feature_column.crossed_column(
+	["ascore", "cscore"], hash_bucket_size=500)
+nscore_ascore_cscore = tf.feature_column.crossed_column(
+	["nscore", "ascore", "cscore"], hash_bucket_size=500)
 
 base_columns = [
 	age_buckets, gender_buckets, country_buckets, ethnicity_buckets,
@@ -48,23 +54,30 @@ base_columns = [
 ]
 
 crossed_columns = [
-	# country_ethnicity
+	nscore_ascore, nscore_cscore, ascore_cscore,
+	nscore_ascore_cscore
 ]
 
 feature_columns = base_columns + crossed_columns
 
+classifier = tf.estimator.DNNLinearCombinedClassifier(
+	model_dir=constants.MODEL_DIR,
+    linear_feature_columns=crossed_columns,
+    dnn_feature_columns=base_columns,
+    dnn_hidden_units=[100, 50])
+
 # classifier = tf.estimator.DNNClassifier(
 # 	feature_columns=feature_columns,
-# 	hidden_units=[512, 256, 128],
+# 	hidden_units=[1024, 512, 256],
 #     optimizer=tf.train.ProximalAdagradOptimizer(
 #       learning_rate=0.1,
 #       l1_regularization_strength=0.001
 #     ),
 # 	model_dir="/tmp/drug_model")
 
-classifier = tf.estimator.LinearClassifier(
-	feature_columns=feature_columns,
-	model_dir="/tmp/drug_model")
+# classifier = tf.estimator.LinearClassifier(
+# 	feature_columns=feature_columns,
+# 	model_dir="/tmp/drug_model")
 
 def input_fn(data_file, num_epochs, shuffle):
 	dataset = pd.read_csv(
@@ -95,8 +108,10 @@ classifier.train(input_fn=input_fn(DRUG_TRAINING, num_epochs=None, shuffle=True)
 results = classifier.evaluate(input_fn=input_fn(DRUG_TEST, num_epochs=1,
 	shuffle=False),
 	steps=1000)
-for key in sorted(results):
-	print("%s: %s" % (key, results[key]))
+# Only printing accuracy for now
+# for key in sorted(results):
+# 	print("%s: %s" % (key, results[key]))
+print("Accuracy: %s" % results['accuracy'])
 
 predictions = classifier.predict(input_fn=input_fn(DRUG_PREDICT, num_epochs=1,
 	shuffle=False))

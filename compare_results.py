@@ -55,12 +55,13 @@ if len(predictions_lines) == len(truth_lines):
 		else:
 			incorrect_aggr += 1
 
-	print("Total Accuracy: %f" % (total_correct/(total_correct + total_incorrect)))
+	# This is useless unless multiple targets are predicted.
+	# print("Total Accuracy: %f" % (total_correct/(total_correct + total_incorrect)))
 	for attr in constants.TARGETS:
 		print(attr + " Accuracy: %f" % 
 			(correct_by_attr[attr]/(correct_by_attr[attr] + incorrect_by_attr[attr])))
 
-	print("Aggregate Accuracy: %f" % (correct_aggr/(correct_aggr + incorrect_aggr)))
+	# print("Aggregate Accuracy: %f" % (correct_aggr/(correct_aggr + incorrect_aggr)))
 
 else:
 	print("Incorrect number of lines in " + PREDICTIONS)
