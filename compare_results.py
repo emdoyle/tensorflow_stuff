@@ -25,6 +25,9 @@ correct_aggr = 0
 incorrect_aggr = 0
 
 def decode(usage_code):
+	# For use with 7 class targets
+	# return str(constants.MAPPED_CODES[usage_code])
+
 	if usage_code in constants.USER:
 		return '1'
 	else:

@@ -6,8 +6,8 @@ predict_output = open("predict_drug_consumption_data.csv", "w")
 
 DELIM = ","
 NUM_ATTR = 31
-NUM_TEST = 500
-NUM_PREDICT = 100
+NUM_TEST = 300
+NUM_PREDICT = 200
 HEADERS = True
 
 old_lines = old_file.readlines()

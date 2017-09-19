@@ -6,7 +6,7 @@ import constants
 
 from tensorflow.contrib.learn.python.learn.datasets import base
 
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 DRUG_TRAINING = "re_drug_consumption_data.csv"
 DRUG_TEST = "test_drug_consumption_data.csv"
@@ -62,22 +62,25 @@ feature_columns = base_columns + crossed_columns
 
 classifier = tf.estimator.DNNLinearCombinedClassifier(
 	model_dir=constants.MODEL_DIR,
+	n_classes=2,
     linear_feature_columns=crossed_columns,
     dnn_feature_columns=base_columns,
     dnn_hidden_units=[100, 50])
 
 # classifier = tf.estimator.DNNClassifier(
-# 	feature_columns=feature_columns,
+# 	feature_columns=base_columns,
+# 	n_classes=7,
 # 	hidden_units=[1024, 512, 256],
 #     optimizer=tf.train.ProximalAdagradOptimizer(
 #       learning_rate=0.1,
 #       l1_regularization_strength=0.001
 #     ),
-# 	model_dir="/tmp/drug_model")
+# 	model_dir=constants.MODEL_DIR)
 
 # classifier = tf.estimator.LinearClassifier(
 # 	feature_columns=feature_columns,
-# 	model_dir="/tmp/drug_model")
+# 	n_classes=7,
+# 	model_dir=constants.MODEL_DIR)
 
 def input_fn(data_file, num_epochs, shuffle):
 	dataset = pd.read_csv(
@@ -92,6 +95,10 @@ def input_fn(data_file, num_epochs, shuffle):
 	# Init empty dataframe, add column for each of targets
 	labels = pd.DataFrame(columns=constants.TARGETS)
 	for target in constants.TARGETS:
+		# Upper version of labels defines 7 classes (harder, lower accuracy)
+		# labels[target] = dataset[target].apply(lambda x: constants.MAPPED_CODES[x]).astype(int)
+
+		# Lower version of labels defines 2 classes (easier, higher accuracy)
 		labels[target] = dataset[target].apply(lambda x: x in constants.USER).astype(int)
 
 	return tf.estimator.inputs.pandas_input_fn(

@@ -18,9 +18,3 @@ python estimators.py;
 
 echo "Compare results:"
 python compare_results.py;
-
-echo "Number of 1s in predictions.csv:"
-grep -o "1" predictions.csv | wc -l
-
-echo "Number of 0s in predictions.csv:"
-grep -o "0" predictions.csv | wc -l

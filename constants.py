@@ -7,12 +7,14 @@ COUNTRY_BOUNDARIES=[-0.5,-0.3,-0.15,0,0.22,0.26,1]
 ETHNICITY_BOUNDARIES=[-1,-0.4,-0.25,0,0.118,0.5,2]
 
 USER = [
-	"CL3", "CL4", "CL5", "CL6"
+	"CL4", "CL5", "CL6"
 ]
 
 NON_USER = [
-	"CL0", "CL1", "CL2"
+	"CL0", "CL1", "CL2", "CL3"
 ]
+
+MAPPED_CODES = {k:v for v, k in enumerate(USER + NON_USER)}
 
 CSV_COLUMNS = [
 	"age", "gender", "education", "country", "ethnicity",
@@ -32,7 +34,7 @@ FEATURE_COLUMNS = [
 NUMBERED_COLUMNS = {k:v for v, k in enumerate(CSV_COLUMNS)}
 
 TARGETS = [
-	"cannabis"
+	"mushrooms"
 ]
 
 MODEL_DIR = '/tmp/drug_model'
