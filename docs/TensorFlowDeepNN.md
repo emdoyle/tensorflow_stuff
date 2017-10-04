@@ -1,4 +1,6 @@
-
+---
+layout: notebook
+---
 # TensorFlow Deep Neural Net
 
 Here I will be re-implementing a deep neural net that I put together in a previous notebook, this time using the TensorFlow low-level API to gain familiarity and perhaps achieve better performance (both speed and accuracy). 

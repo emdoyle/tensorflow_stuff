@@ -1,4 +1,6 @@
-
+---
+layout: notebook
+---
 # Neural Network with Backpropagation From Scratch :)
 
 This notebook will follow [this](https://medium.com/@curiousily/tensorflow-for-hackers-part-iv-neural-network-from-scratch-1a4f504dfa8) tutorial.  The purpose is to gain intuition about neural networks before eventually revisiting my work with TensorFlow.  After building this NN from scratch I will use TF to build an NN classifier from scratch instead of using the pre-built estimators.
