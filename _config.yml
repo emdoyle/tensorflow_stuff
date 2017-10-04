@@ -8,15 +8,15 @@
 # in the templates via {{ site.myvariable }}.
 title: TensorFlow Stuff
 email: evanmdoyle@gmail.com
-description: >- This is a site to house Evan Doyle's foray into
-	Machine Learning.
+description: >- # This is a site to house Evan Doyle's foray into
+    Machine Learning.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  emdoyle
 
 # Build settings
 markdown: kramdown
-theme: midnight
+theme: jekyll-theme-midnight
 plugins:
   - jekyll-feed
 
