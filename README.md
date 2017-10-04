@@ -1,6 +1,3 @@
-# TensorFlow Stuff
-Getting acquainted with TensorFlow.
-
 This repo is where I'll house everything related to Machine Learning.  I started by
 doing tutorials with TensorFlow but have quickly been sucked in by articles and
 papers about the math behind it.

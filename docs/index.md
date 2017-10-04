@@ -1,11 +1,8 @@
-# TensorFlow Stuff
-Getting acquainted with TensorFlow.
-
 This repo is where I'll house everything related to Machine Learning.  I started by
 doing tutorials with TensorFlow but have quickly been sucked in by articles and
 papers about the math behind it.
 
-### 1. [/Non-Tensorflow](https://github.com/emdoyle/tensorflow_stuff/blob/gh-pages/Non-Tensorflow/nn_backprop_notebook.ipynb)
+### 1. [/Non-Tensorflow]({{ site.baseurl }}/nn_backprop_notebook.html)
 There is a Jupyter notebook in this directory that
 contains the code for a deep neural net (variable number of layers, nodes per layer)
 that I adapted from a shallow neural net implementation [here](https://medium.com/@curiousily/tensorflow-for-hackers-part-iv-neural-network-from-scratch-1a4f504dfa8), and it is completely
@@ -18,7 +15,7 @@ an accuracy of 98.4% with my deep NN implementation.  This should give me a soli
 base to maximize the accuracy of a TF estimator on a dataset I pulled from the UCI
 Machine Learning Repository.
 
-### 2. [/DeepNN](https://github.com/emdoyle/tensorflow_stuff/blob/gh-pages/DeepNN/TensorFlowDeepNN.ipynb)
+### 2. [/DeepNN]({{ site.baseurl }}/TensorFlowDeepNN.html)
 There is a Jupyter notebook in this directory that contains the code for a deep
 neural net, but this time it is implemented using TensorFlow's low-level API.
 This means that data is manually parsed from the [official MNIST website](http://yann.lecun.com/exdb/mnist/), the network is
@@ -30,3 +27,7 @@ This network is slightly faster to train, and achieves close to 98% accuracy in 
 30 epochs (versus the gigantic 500 epochs for the previous notebook).  I could also
 experiment with different pre-built estimators but of course the point of this
 notebook was to better understand the low-level API.
+
+### 3. [/RealData]()
+This will be a Jupyter notebook showing how I used TF to make predictions based on
+real data concerning drug use and measured personality traits.

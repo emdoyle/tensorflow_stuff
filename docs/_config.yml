@@ -6,10 +6,10 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: TensorFlow Stuff
+title: Machine Learning
 email: evanmdoyle@gmail.com
 description: >- #
-    Machine Learning
+    A Journey
 baseurl: "/tensorflow_stuff" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  emdoyle
@@ -19,6 +19,8 @@ markdown: kramdown
 theme: jekyll-theme-midnight
 plugins:
   - jekyll-feed
+
+show_downloads: True
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
