@@ -9,7 +9,7 @@
 title: TensorFlow Stuff
 email: evanmdoyle@gmail.com
 description: >- # This is a site to house Evan Doyle's foray into
-    Machine Learning.
+    Machine Learning
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  emdoyle

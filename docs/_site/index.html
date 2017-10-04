@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+<!-- Begin Jekyll SEO tag v2.3.0 -->
+<title>TensorFlow Stuff | Machine Learning</title>
+<meta property="og:title" content="TensorFlow Stuff" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Machine Learning" />
+<meta property="og:description" content="Machine Learning" />
+<link rel="canonical" href="http://localhost:4000/" />
+<meta property="og:url" content="http://localhost:4000/" />
+<meta property="og:site_name" content="TensorFlow Stuff" />
+<script type="application/ld+json">
+{"name":"TensorFlow Stuff","description":"Machine Learning","author":null,"@type":"WebSite","url":"http://localhost:4000/","publisher":null,"image":null,"headline":"TensorFlow Stuff","dateModified":null,"datePublished":null,"sameAs":null,"mainEntityOfPage":null,"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=e61a73a1dbeac424bd4919d6a939c988ec9b3d89">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="/assets/js/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="/assets/css/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="http://github.com/emdoyle/tensorflow_stuff">View On GitHub</a></li>
+          
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>TensorFlow Stuff</h1>
+          <p>Machine Learning</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="http://github.com/emdoyle">emdoyle</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1 id="tensorflow-stuff">TensorFlow Stuff</h1>
+<p>Getting acquainted with TensorFlow.</p>
+
+<p>This repo is where I’ll house everything related to Machine Learning.  I started by
+doing tutorials with TensorFlow but have quickly been sucked in by articles and
+papers about the math behind it.</p>
+
+<h3 id="1-non-tensorflow">1. <a href="https://github.com/emdoyle/tensorflow_stuff/blob/gh-pages/Non-Tensorflow/nn_backprop_notebook.ipynb">/Non-Tensorflow</a></h3>
+<p>There is a Jupyter notebook in this directory that
+contains the code for a deep neural net (variable number of layers, nodes per layer)
+that I adapted from a shallow neural net implementation <a href="https://medium.com/@curiousily/tensorflow-for-hackers-part-iv-neural-network-from-scratch-1a4f504dfa8">here</a>, and it is completely
+done without TensorFlow.  It uses NumPy for the linear algebra and matplot for
+visualization.</p>
+
+<p>I have been reading about optimizing the hyperparameters of a deep neural net since
+they are notoriously difficult to train, and after a lot of testing, I settled on
+an accuracy of 98.4% with my deep NN implementation.  This should give me a solid
+base to maximize the accuracy of a TF estimator on a dataset I pulled from the UCI
+Machine Learning Repository.</p>
+
+<h3 id="2-deepnn">2. <a href="https://github.com/emdoyle/tensorflow_stuff/blob/gh-pages/DeepNN/TensorFlowDeepNN.ipynb">/DeepNN</a></h3>
+<p>There is a Jupyter notebook in this directory that contains the code for a deep
+neural net, but this time it is implemented using TensorFlow’s low-level API.
+This means that data is manually parsed from the <a href="http://yann.lecun.com/exdb/mnist/">official MNIST website</a>, the network is
+defined by manually initialized and connected tensors, and the step function
+is also defined manually.  The only magical part is the polynomial decay of the
+learning rate, which is provided by TF.</p>
+
+<p>This network is slightly faster to train, and achieves close to 98% accuracy in only
+30 epochs (versus the gigantic 500 epochs for the previous notebook).  I could also
+experiment with different pre-built estimators but of course the point of this
+notebook was to better understand the low-level API.</p>
+
+
+      </section>
+
+    </div>
+
+    
+  </body>
+</html>
