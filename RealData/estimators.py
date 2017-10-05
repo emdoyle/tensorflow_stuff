@@ -65,7 +65,7 @@ classifier = tf.estimator.DNNLinearCombinedClassifier(
 	n_classes=2,
     linear_feature_columns=crossed_columns,
     dnn_feature_columns=base_columns,
-    dnn_hidden_units=[100, 50])
+    dnn_hidden_units=[200, 100, 50, 30, 10])
 
 # classifier = tf.estimator.DNNClassifier(
 # 	feature_columns=base_columns,

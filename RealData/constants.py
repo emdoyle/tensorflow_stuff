@@ -34,7 +34,7 @@ FEATURE_COLUMNS = [
 NUMBERED_COLUMNS = {k:v for v, k in enumerate(CSV_COLUMNS)}
 
 TARGETS = [
-	"mushrooms"
+	"cannabis"
 ]
 
 MODEL_DIR = '/tmp/drug_model'
