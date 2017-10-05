@@ -28,6 +28,6 @@ This network is slightly faster to train, and achieves close to 98% accuracy in 
 experiment with different pre-built estimators but of course the point of this
 notebook was to better understand the low-level API.
 
-### 3. [/RealData]({{ site.baseurl }}/Visualizing_Data.html)
+### 3. [/RealData]({{ site.baseurl }}/VisualizingData.html)
 This will be a Jupyter notebook showing how I used TF to make predictions based on
 real data concerning drug use and measured personality traits.
