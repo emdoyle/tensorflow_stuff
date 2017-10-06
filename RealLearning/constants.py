@@ -6,6 +6,8 @@ COUNTRY_BOUNDARIES=[-0.5,-0.3,-0.15,0,0.22,0.26,1]
 
 ETHNICITY_BOUNDARIES=[-1,-0.4,-0.25,0,0.118,0.5,2]
 
+EDUCATION_BOUNDARIES=[-2,-1.5,-1.3,-1,-0.5,0,1,1.5,2]
+
 USER = [
 	"CL4", "CL5", "CL6"
 ]
@@ -31,10 +33,13 @@ FEATURE_COLUMNS = [
 	"impulsive", "ss"
 ]
 
+def line_diff(first, second):
+	return [x for x in first if x not in second]
+
+USAGE_COLUMNS = line_diff(CSV_COLUMNS, FEATURE_COLUMNS)
+
 NUMBERED_COLUMNS = {k:v for v, k in enumerate(CSV_COLUMNS)}
 
-TARGETS = [
-	"cannabis"
-]
+TARGET = ["alcohol"]
 
 MODEL_DIR = '/tmp/drug_model'
