@@ -40,6 +40,6 @@ USAGE_COLUMNS = line_diff(CSV_COLUMNS, FEATURE_COLUMNS)
 
 NUMBERED_COLUMNS = {k:v for v, k in enumerate(CSV_COLUMNS)}
 
-TARGET = ["alcohol"]
+TARGET = ["cannabis"]
 
 MODEL_DIR = '/tmp/drug_model'
