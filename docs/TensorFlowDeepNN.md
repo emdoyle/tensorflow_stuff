@@ -85,34 +85,7 @@ training_init_op = iterator.make_initializer(train_data)
 testing_init_op = iterator.make_initializer(test_data)
 ```
 
-So now I have two ops, each of which will allow me to iterate over the Datasets I created.  One corresponds to training data and the other to testing/evaluation data.  Below I print the shape of the first element of each to see that the processing has worked as expected.
-
-
-```python
-with tf.Session() as sess:
-
-    sess.run(training_init_op)
-
-    try:
-        elem = sess.run(next_element)
-        print(str(tf.shape(elem[0])) + ", " + str(tf.shape(elem[1])))
-    except tf.errors.OutOfRangeError:
-        print("End of training dataset.")
-
-    sess.run(testing_init_op)
-
-    try:
-        elem = sess.run(next_element)
-        print(str(tf.shape(elem[0])) + ", " + str(tf.shape(elem[1])))
-    except tf.errors.OutOfRangeError:
-        print("End of test dataset.")
-```
-
-    Tensor("Shape:0", shape=(2,), dtype=int32), Tensor("Shape_1:0", shape=(2,), dtype=int32)
-    Tensor("Shape_2:0", shape=(2,), dtype=int32), Tensor("Shape_3:0", shape=(2,), dtype=int32)
-
-
-The first element in each tuple is a batch of arrays of IMAGE_PIXELS integers.  The second element in each tuple is a batch of arrays of NUM_CLASSES integers and is one-hot.
+So now I have two ops, each of which will allow me to iterate over the Datasets I created.  One corresponds to training data and the other to testing/evaluation data.
 
 
 ```python
@@ -163,28 +136,9 @@ with tf.name_scope("biases"):
     
     BIASES[-1] = bias_variable([1,NUM_CLASSES])
     variable_summaries(BIASES[-1])
-    
-with tf.Session() as sess:
-    for weight in WEIGHTS:
-        print(weight.get_shape().as_list())
-        
-    for bias in BIASES:
-        print(bias.get_shape().as_list())
 ```
 
-    [784, 250]
-    [250, 30]
-    [30, 10]
-    [10, 10]
-    [1, 250]
-    [1, 30]
-    [1, 10]
-    [1, 10]
-
-
-So now I can see that the weights and biases are being shaped correctly relative to the hidden layers, all that is left is to implement the backpropagation algorithm.
-
-[This](http://blog.aloni.org/posts/backprop-with-tensorflow/) has turned out to be extremely helpful in manually modeling backpropagation in tensorflow.
+Now all that is left is the backpropagation algorithm.  [This](http://blog.aloni.org/posts/backprop-with-tensorflow/) has turned out to be extremely helpful in manually modeling backpropagation in tensorflow.
 
 
 ```python
@@ -323,11 +277,10 @@ for i in range(EPOCHS):
 RUN += 1
 ```
 
-    Accuracy: 97.93%
+    Accuracy: 97.87%
 
 
-It works!  This is a deep neural network capable of a variable number of hidden nodes and layers written using the TensorFlow low-level API.  Next I will add bells and whistles until it can beat 98.40% (the best I achieved without TF).  
-Then, I think it'd be a good idea to try to package it as an Estimator (although I'm not sure this is possible or even makes sense since I haven't looked into it yet.
+It works!  This is a deep neural network capable of a variable number of hidden nodes and layers written using the TensorFlow low-level API.  I think it'd be a good idea to try to package it as an Estimator (although I'm not sure this is possible or even makes sense since I haven't looked into it yet).
 
 
 ```python
@@ -351,7 +304,7 @@ plt.show()
 ```
 
 
-![png](assets/output_20_0.png)
+![png](assets/output_18_0.png)
 
 
 This loss function is the mean of the cross-entropy calculation.  I'm not sure why it appears so cyclical, but considering I observed very similar behavior in the non-TF version of this NN, I think it is either that the model is 'circling' a minimum with a learning rate slightly too high (although I have implemented polynomial decay) or perhaps that I need to add regularization (although I don't know the mechanism by which this could be the cause).

@@ -4,7 +4,7 @@ papers about the math behind it.
 
 ## NOTEBOOKS
 
-### 1. [/Non-Tensorflow]({{ site.baseurl }}/nn_backprop_notebook.html)
+### 1. [/Non-Tensorflow]({{ site.baseurl }}/DeepNNClassifier.html)
 This contains the code for a deep neural net (variable number of layers, nodes per layer)
 that I adapted from a shallow neural net implementation [here](https://medium.com/@curiousily/tensorflow-for-hackers-part-iv-neural-network-from-scratch-1a4f504dfa8), and it is completely
 done without TensorFlow.  It uses NumPy for the linear algebra and matplot for

@@ -1,5 +1,21 @@
 import constants
 
+def one_hot(num_classes, labels):
+	result = [[0 for x in range(num_classes)] for z in labels]
+	for i in range(len(labels)):
+		result[i][labels[i]] = 1
+	return result
+
+def process_column_names(columns):
+	return [process_column_name(x.name) for x in columns if process_column_name(x.name) is not None]
+
+def process_column_name(name):
+	if '_X_' in name:
+		return None
+	if '_bucketized' not in name:
+		return name
+	return name[:name.find('_bucketized')]
+
 def decode(usage_code):
 	# For use with 7 class targets
 	# return str(constants.MAPPED_CODES[usage_code])
@@ -80,10 +96,16 @@ def compare_results(target):
 		for attr in target:
 			print(attr + " Accuracy: %f%%" % 
 				(correct_by_attr[attr]/(correct_by_attr[attr] + incorrect_by_attr[attr])*100))
-			print(attr + " Sensitivity: %f%%" %
-				(true_positives/(true_positives+false_positives)*100))
-			print(attr + " Specificity: %f%%" %
-				(true_negatives/(true_negatives+false_negatives)*100))
+			if (true_positives+false_positives) == 0:
+				print(attr + " Sensitivity: N/A")
+			else:
+				print(attr + " Sensitivity: %f%%" %
+					(true_positives/(true_positives+false_positives)*100))
+			if (true_negatives+false_negatives) == 0:
+				print(attr + " Specificity: N/A")
+			else:
+				print(attr + " Specificity: %f%%" %
+					(true_negatives/(true_negatives+false_negatives)*100))
 
 		# print("Aggregate Accuracy: %f" % (correct_aggr/(correct_aggr + incorrect_aggr)))
 
