@@ -10,8 +10,9 @@ layout: notebook
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-from pylab import *
 import constants
+
+from pylab import *
 from functools import reduce
 
 %matplotlib inline
@@ -236,3 +237,91 @@ likely to have tried cannabis.
     
 #### 5. LSD is negatively associated with cscore
 There is a weak negative correlation between cscore (conscientiousness) and usage of LSD.
+
+# Personality Profiles by Drug
+
+
+```python
+# NOTE: These scores are slightly inaccuracte because certain scores were not found in the dataset
+# for example ascores begin 12, 16, 18, 23... while this will return 12, 13, 14, 15...
+# Due to this issue, treat the graphs as approximate.
+def map_personality_vals(feat, offset):
+    return { y: x+offset for x, y in enumerate(get_feature_vals(feat)) }
+
+nscore_vals = map_personality_vals("nscore", 12)
+escore_vals = map_personality_vals("escore", 16)
+oscore_vals = map_personality_vals("oscore", 24)
+ascore_vals = map_personality_vals("ascore", 12)
+cscore_vals = map_personality_vals("cscore", 17)
+```
+
+
+```python
+def plot_personality_prof(drug, axis, with_average=False):
+    drug_index = get_drug_index(drug)
+    horiz_axis = [x for x in range(5)]
+    personality_feats = ["oscore", "cscore", "escore", "ascore", "nscore"]
+    feat_values = [oscore_vals, cscore_vals, escore_vals, ascore_vals, nscore_vals]
+    feat_indexes = [get_feat_index(x) for x in personality_feats]
+    feat_totals = [0 for x in personality_feats]
+    running_totals = [0 for x in personality_feats]
+    num_users = 0
+
+    for features, usages in cases:
+        user = usages[drug_index]
+        if user:
+            num_users += 1
+        for i in range(len(feat_indexes)):
+            idx = feat_indexes[i]
+            # This is only for the given drug
+            if user:
+                feat_totals[i] += feat_values[i][features[idx]]
+            # This is for the overall average
+            running_totals[i] += feat_values[i][features[idx]]
+                
+    if num_users > 0:
+        feat_averages = [float(x/num_users) for x in feat_totals]
+        overall_averages = [float(x/len(cases)) for x in running_totals]
+    
+        axis.plot(horiz_axis, feat_averages, label=drug)
+        axis.plot(horiz_axis, overall_averages, color='g', label="average")
+        axis.legend(loc='upper right')
+        axis.set_ylabel("Average Score")
+        axis.set_title("Personality Profile (" + drug + ")")
+        axis.set_xticks(horiz_axis)
+        axis.set_xticklabels(personality_feats)
+        axis.set_yticks(range(0,80,5))
+        axis.set_yticklabels(i for i in range(0,80,5))
+    else:
+        print("No users of " + drug + " found.")
+```
+
+
+```python
+def plot_personality_profiles(drugs, cols=3, width=8, height=8):
+    if len(drugs) < (cols+1):
+        NUM_ROWS = 1
+        NUM_COLS = len(drugs)
+    else:
+        NUM_ROWS = math.ceil(len(drugs)/cols)
+        NUM_COLS = cols
+
+    fig, axes = plt.subplots(NUM_ROWS, NUM_COLS, figsize=(width*NUM_COLS, height*NUM_ROWS))
+    axes = axes.flatten()
+    for i in range(len(drugs)):
+        plot_personality_prof(drugs[i], axes[i])
+        
+    plt.tight_layout()
+    plt.show()
+```
+
+
+```python
+plot_personality_profiles(["cannabis", "coke", "alcohol", "LSD", "caff", "nicotine"])
+```
+
+
+![png](assets/output_19_0.png)
+
+
+These graphs use the average value of each of the Big Five personality traits for both the total population and the population which uses the given drug.  Both plotted lines are put onto the same graph to allow for easy comparison.
