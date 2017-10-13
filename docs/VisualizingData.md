@@ -1,6 +1,7 @@
 ---
 layout: notebook
 ---
+
 # Visualizing UCI Drug Consumption Data
 
 [This](https://archive.ics.uci.edu/ml/datasets/Drug+consumption+%28quantified%29) is the data set that I will be trying to understand.  Unforunately I don't think the sample size is big enough for effective training of a classifier, but I could easily be wrong and I'm going to try anyway.
@@ -284,14 +285,15 @@ def plot_personality_prof(drug, axis, with_average=False):
         overall_averages = [float(x/len(cases)) for x in running_totals]
     
         axis.plot(horiz_axis, feat_averages, label=drug)
-        axis.plot(horiz_axis, overall_averages, color='g', label="average")
+        axis.plot(horiz_axis, overall_averages, color='r', label="average", linestyle="dashdot")
         axis.legend(loc='upper right')
         axis.set_ylabel("Average Score")
         axis.set_title("Personality Profile (" + drug + ")")
         axis.set_xticks(horiz_axis)
         axis.set_xticklabels(personality_feats)
-        axis.set_yticks(range(0,80,5))
-        axis.set_yticklabels(i for i in range(0,80,5))
+        axis.set_yticks(range(25,60,5))
+        axis.set_yticklabels(i for i in range(25,60,5))
+        axis.margins(x=0.02)
     else:
         print("No users of " + drug + " found.")
 ```
@@ -317,7 +319,8 @@ def plot_personality_profiles(drugs, cols=3, width=8, height=8):
 
 
 ```python
-plot_personality_profiles(["cannabis", "coke", "alcohol", "LSD", "caff", "nicotine"])
+plot_personality_profiles(["cannabis", "coke", "alcohol", "LSD", "caff",
+                           "nicotine", "ketamine", "amphet", "mushrooms"])
 ```
 
 
