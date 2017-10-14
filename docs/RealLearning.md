@@ -1,6 +1,7 @@
 ---
 layout: notebook
 ---
+
 # Using TensorFlow to Predict Drug Usage
 
 In this notebook I will be building an Estimator using tf.estimator to classify drug usage in the [UCI dataset](https://archive.ics.uci.edu/ml/datasets/Drug+consumption+%28quantified%29) and comparing my results to the accompanying [paper](https://arxiv.org/abs/1506.06297).  The paper will also give me some insight into how to customize the Estimator to each classification task.
@@ -146,6 +147,7 @@ def model_fn(features, labels, mode, params):
     reg_variables = tf.get_collection(tf.GraphKeys.REGULARIZATION_LOSSES)
     reg_term = tf.contrib.layers.apply_regularization(regularizer, reg_variables)
     loss += reg_term
+    loss = tf.divide(loss, tf.constant(len(params["hidden_layers"]), tf.float32))
 
     eval_metric_ops = {
         "rmse": tf.metrics.root_mean_squared_error(tf.cast(labels,tf.float64), tf.cast(predictions,tf.float64)),
@@ -199,9 +201,8 @@ def custom_predict(classifier, target, feature_cols, cutoff=0):
 
 ```python
 feature_columns = [
-    age_buckets, gender_buckets, country_buckets, ethnicity_buckets,
-    education_buckets, tf.feature_column.embedding_column(nscore_ascore_cscore, 1),
-    nscore, escore, oscore, ascore, cscore, impulsive, ss
+    age_buckets, education_buckets,
+    oscore, ascore, cscore, impulsive, ss
 ]
 
 feature_col_names = process_column_names(feature_columns)
@@ -209,7 +210,7 @@ feature_col_names = process_column_names(feature_columns)
 model_params = {
     "feature_columns": feature_columns,
     "hidden_layers": [10, 5],
-    "start_learn": 0.15,
+    "start_learn": 0.1,
     "end_learn": 0.01,
     "beta": 0.001
 }
@@ -220,15 +221,15 @@ custom_predict(nn, "cannabis", feature_col_names)
 compare_results(["cannabis"])
 ```
 
-    {'accuracy': 0.8433333, 'loss': 0.40682358, 'rmse': 0.86066353, 'global_step': 100000}
-    Accuracy: 84.33%
+    {'accuracy': 0.81333333, 'loss': 0.22922964, 'rmse': 0.84780484, 'global_step': 100000}
+    Accuracy: 81.33%
     Comparing 200:200
-    cannabis Accuracy: 73.500000%
-    cannabis Sensitivity: 72.566372%
-    cannabis Specificity: 74.712644%
+    cannabis Accuracy: 75.000000%
+    cannabis Sensitivity: 74.545455%
+    cannabis Specificity: 75.555556%
 
 
-This estimator runs 100,000 training steps pretty quickly (about a minute and a half on my laptop), and has achieved better accuracy than we have seen so far on this dataset.  A few choices that I made with this model are:
+This estimator runs 100,000 training steps pretty quickly (about two minutes on my laptop), and has achieved better accuracy than we have seen so far on this dataset.  A few choices that I made with this model are:
 
 1. Used polynomial decay to decay the learning rate.
   * This slows the learning rate as the model sees more examples to avoid overshooting a local loss minimum
@@ -254,7 +255,7 @@ feature_col_names = process_column_names(feature_columns)
 
 model_params = {
     "feature_columns": feature_columns,
-    "hidden_layers": [10],
+    "hidden_layers": [10, 5],
     "start_learn": 0.15,
     "end_learn": 0.01,
     "beta": 0.001
@@ -266,12 +267,12 @@ custom_predict(nn, "alcohol", feature_col_names)
 compare_results(["alcohol"])
 ```
 
-    {'accuracy': 0.81, 'loss': 0.52362716, 'rmse': 0.94839674, 'global_step': 100000}
-    Accuracy: 81.00%
+    {'accuracy': 0.82666665, 'loss': 0.23683901, 'rmse': 0.94360751, 'global_step': 100000}
+    Accuracy: 82.67%
     Comparing 200:200
-    alcohol Accuracy: 81.000000%
-    alcohol Sensitivity: 82.901554%
-    alcohol Specificity: 28.571429%
+    alcohol Accuracy: 83.000000%
+    alcohol Sensitivity: 83.589744%
+    alcohol Specificity: 60.000000%
 
 
 
@@ -297,12 +298,12 @@ custom_predict(nn, "nicotine", feature_col_names)
 compare_results(["nicotine"])
 ```
 
-    {'accuracy': 0.61666667, 'loss': 0.70668542, 'rmse': 0.98140591, 'global_step': 60000}
-    Accuracy: 61.67%
+    {'accuracy': 0.62666667, 'loss': 0.22827935, 'rmse': 0.89752734, 'global_step': 60000}
+    Accuracy: 62.67%
     Comparing 200:200
-    nicotine Accuracy: 53.000000%
-    nicotine Sensitivity: 51.041667%
-    nicotine Specificity: 54.807692%
+    nicotine Accuracy: 56.000000%
+    nicotine Sensitivity: 54.444444%
+    nicotine Specificity: 57.272727%
 
 
 This was a bit surprising to me.  I tried many different combinations of hidden layers, feature columns, learning rate, and even the number of total training steps to see if I could get an accuracy above 70% and did not succeed.  The authors of the [paper](https://arxiv.org/abs/1506.06297) accompanying this dataset claim to have achieved around 70% sensitivity and specifity for each drug, so I think I will read over their findings and see if I can apply some of them to my own model.  Although if the authors were only able to achieve 70% on classifying nicotine usage, then I'm not too far off.
@@ -310,17 +311,16 @@ This was a bit surprising to me.  I tried many different combinations of hidden 
 
 ```python
 feature_columns = [
-    age_buckets, gender_buckets, country_buckets, ethnicity_buckets,
-    education_buckets, tf.feature_column.embedding_column(nscore_ascore_cscore, 1),
-    nscore, escore, oscore, ascore, cscore, impulsive, ss
+    age_buckets, gender_buckets,
+    nscore, escore, oscore, impulsive
 ]
 
 feature_col_names = process_column_names(feature_columns)
 
 model_params = {
     "feature_columns": feature_columns,
-    "hidden_layers": [30,10],
-    "start_learn": 0.15,
+    "hidden_layers": [10,5],
+    "start_learn": 0.1,
     "end_learn": 0.01,
     "beta": 0.001
 }
@@ -331,12 +331,12 @@ custom_predict(nn, "LSD", feature_col_names)
 compare_results(["LSD"])
 ```
 
-    {'accuracy': 0.89999998, 'loss': 0.32547399, 'rmse': 0.82999963, 'global_step': 100000}
-    Accuracy: 90.00%
+    {'accuracy': 0.9066667, 'loss': 0.14956614, 'rmse': 0.85296059, 'global_step': 100000}
+    Accuracy: 90.67%
     Comparing 200:200
-    LSD Accuracy: 82.500000%
-    LSD Sensitivity: 23.809524%
-    LSD Specificity: 89.385475%
+    LSD Accuracy: 87.500000%
+    LSD Sensitivity: 46.153846%
+    LSD Specificity: 90.374332%
 
 
 At first an accuracy over 90% looked awesome, but I was curious to see the sensitivity in particular.  Since LSD usage as defined occurs in such a small minority of the respondents, the model adopts a heavy negative bias.  It is very bad at identifying people who actually use LSD, and its accuracy is buoyed by the fact that this failure doesn't come up very often.
