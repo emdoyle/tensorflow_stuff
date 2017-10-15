@@ -3,7 +3,7 @@
 DOCS_DIR="/Users/evanmdoyle/Programming/Learn/docs/"
 SRC_DIR="/Users/evanmdoyle/Downloads/"
 SCRIPT_DIR="/Users/evanmdoyle/Programming/Learn/scripts/"
-declare -a NOTEBOOK_NAMES=("VisualizingData" "RealLearning" "TensorFlowDeepNN" "DeepNNClassifier")
+declare -a NOTEBOOK_NAMES=("VisualizingData" "RealLearning" "TensorFlowDeepNN" "DeepNNClassifier" "NEAT")
 
 for name in ${NOTEBOOK_NAMES[@]}; do
 	if [[ -e ${SRC_DIR}${name}.md || -e ${SRC_DIR}${name}.zip ]]
