@@ -304,7 +304,7 @@ plt.show()
 ```
 
 
-![png](assets/assets/assets/assets/assets/output_18_0.png)
+![png](assets/output_18_0.png)
 
 
 This loss function is the mean of the cross-entropy calculation.  I'm not sure why it appears so cyclical, but considering I observed very similar behavior in the non-TF version of this NN, I think it is either that the model is 'circling' a minimum with a learning rate slightly too high (although I have implemented polynomial decay) or perhaps that I need to add regularization (although I don't know the mechanism by which this could be the cause).
