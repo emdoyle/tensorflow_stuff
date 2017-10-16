@@ -178,7 +178,7 @@ plot_feats_drugs(20,10)
 ```
 
 
-![png](assets/output_9_0.png)
+![png](assets/assets/assets/assets/assets/output_9_0.png)
 
 
 The code above uses the lists `FEATS` and `DRUGS` initialized at the beginning to plot graphs of the percentage of individuals with each feature who use each drug.  With the sample I have selected, we can observe a few interesting properties.
@@ -198,7 +198,7 @@ plot_feats_drugs(20,5,color='b')
 ```
 
 
-![png](assets/output_11_0.png)
+![png](assets/assets/assets/assets/assets/output_11_0.png)
 
 
 Looking at three highly used substances (total users in dataset: 1551, 1764, 875 respectively), we can see that there is generally low variation by country except in nicotine.  Although New Zealand is a clear outlier (only 5 individuals in the sample), the UK and USA comparison is striking.  This suggests that country could be noise for alcohol and caffeine, but a useful signal for nicotine (although this is of course a huge simplifcation and some combination of country and other columns could create signal).
@@ -214,7 +214,7 @@ plot_feats_drugs(30,40,label=False,color='g')
 ```
 
 
-![png](assets/output_13_0.png)
+![png](assets/assets/assets/assets/assets/output_13_0.png)
 
 
 So from this we can tell a few things:
@@ -324,7 +324,7 @@ plot_personality_profiles(["cannabis", "coke", "alcohol", "LSD", "caff",
 ```
 
 
-![png](assets/output_19_0.png)
+![png](assets/assets/assets/assets/assets/output_19_0.png)
 
 
 These graphs use the average value of each of the Big Five personality traits for both the total population and the population which uses the given drug.  Both plotted lines are put onto the same graph to allow for easy comparison.

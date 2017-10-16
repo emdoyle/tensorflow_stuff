@@ -45,3 +45,7 @@ drug usage.
 While Parts 1 & 2 had an explicit focus on not using pre-packaged TF tools, this
 notebook aims to take advantage of anything available to boost accuracy to more
 closely mirror a real application of the technology (albeit at a relatively small scale).
+
+### 5. [/NEAT]({{ site.baseurl }}/NEAT.html)
+This notebook is dedicated to the NEAT genetic algorithm for evolving neural networks.
+This algorithm is explored as an alternative to traditional backpropagation.

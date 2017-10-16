@@ -16,12 +16,13 @@ This was sort of a pain to install, but the good news is it's all set up now and
 NEAT stands for ["NeuroEvolution of Augmenting Topologies"](https://en.wikipedia.org/wiki/Neuroevolution_of_augmenting_topologies) and is a genetic algorithm for evolving neural networks.  It is based on the idea that mutation, speciation, and natural selection can begin with very simple structures and eventually evolve complex topologies that maximize a given fitness function.
 
 There are really two distinct ways to use NEAT:
+
     1. Decide on the topology of the neural network ahead of time and simply evolve connection
     weights and biases.
 
-![caption](files/PreDetermTopo.png)
+![png](assets/PreDetermTopo.png)
 
     2. Start with a very simple network consisting of only input and output layers and evolve new nodes
     and connections along with connection weights and biases.
 
-![caption](files/EvolvedTopo.png)
+![png](assets/EvolvedTopo.png)

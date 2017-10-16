@@ -252,7 +252,7 @@ plot_error(dnn)
 ```
 
 
-![png](assets/output_6_0.png)
+![png](assets/assets/assets/assets/assets/output_6_0.png)
 
 
 Cool!  So this model was able to crack 98% accuracy, the best of any model in this notebook, but the error graph is puzzling.  Why does the error spike up and down every ~20-25 epochs?  I'll have to examine this more closely, since solving this could allow for quicker convergence and thus better accuracy on the same number of epochs.

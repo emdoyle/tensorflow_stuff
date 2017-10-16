@@ -16,6 +16,7 @@ for name in ${NOTEBOOK_NAMES[@]}; do
 			rm ${DOCS_DIR}*.zip
 		fi
 		python ${SCRIPT_DIR}add_layout.py ${DOCS_DIR}${name}.md
-		python ${SCRIPT_DIR}fix_image_paths.py ${DOCS_DIR}${name}.md
 	fi
 done
+
+/bin/bash ${SCRIPT_DIR}refresh_images.sh
