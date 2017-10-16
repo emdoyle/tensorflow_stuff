@@ -283,16 +283,20 @@ def plot_personality_prof(drug, axis, with_average=False):
     if num_users > 0:
         feat_averages = [float(x/num_users) for x in feat_totals]
         overall_averages = [float(x/len(cases)) for x in running_totals]
+        diff = [x - y for x, y in zip(feat_averages, overall_averages)]
     
-        axis.plot(horiz_axis, feat_averages, label=drug)
-        axis.plot(horiz_axis, overall_averages, color='r', label="average", linestyle="dashdot")
+        width = 0.35
+        axis.bar(horiz_axis, diff, width, color='r')
+        axis.plot(horiz_axis, diff, color='b', linestyle='dashdot', label=drug)
+        axis.plot(np.arange(-1,len(horiz_axis)+1), [0 for x in range(-1, len(horiz_axis)+1)],
+                  color='k', label="average")
         axis.legend(loc='upper right')
-        axis.set_ylabel("Average Score")
+        axis.set_ylabel("Delta to Average")
         axis.set_title("Personality Profile (" + drug + ")")
         axis.set_xticks(horiz_axis)
         axis.set_xticklabels(personality_feats)
-        axis.set_yticks(range(25,60,5))
-        axis.set_yticklabels(i for i in range(25,60,5))
+        axis.set_yticks(range(-5,5,1))
+        axis.set_yticklabels(i for i in range(-5,5,1))
         axis.margins(x=0.02)
     else:
         print("No users of " + drug + " found.")
@@ -327,4 +331,10 @@ plot_personality_profiles(["cannabis", "coke", "alcohol", "LSD", "caff",
 ![png](assets/output_19_0.png)
 
 
-These graphs use the average value of each of the Big Five personality traits for both the total population and the population which uses the given drug.  Both plotted lines are put onto the same graph to allow for easy comparison.
+These graphs use the average value of each of the Big Five personality traits for both the total population and the population which uses the given drug.  The red bars and blue dotted line plot the delta between the average score for a user of the drug and the global average score.  For example:
+
+Looking at the cannabis chart we can see that the Delta to Average for oscore, cscore, escore, ascore, and nscore are approximately:
+
++2.8, -1.9, +0.1, -0.8, +0.6
+
+Scanning the values in the other charts tells us that the Deltas for nscore and cscore in particular seem significant.
